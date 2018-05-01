@@ -32,15 +32,15 @@ int main()
     pcap_if_t* devices;
     pcap_if_t* device;
     char error_buffer [PCAP_ERRBUF_SIZE];
-    
+
     /**************************************************************/
-    //Retrieve the device list on the local machine 
+    //Retrieve the device list on the local machine
     if (pcap_findalldevs(&devices, error_buffer) == -1)
     {
         printf("Error in pcap_findalldevs: %s\n", error_buffer);
         return -1;
     }
-    // Count devices and provide jumping to the selected device 
+    // Count devices and provide jumping to the selected device
     // Print the list
     for (device = devices; device; device = device->next)
     {
@@ -76,8 +76,8 @@ int main()
     }
 
     /**************************************************************/
-    // Open the capture file 
-    if ((device_handle_in = pcap_open_offline("example.pcap",	// File name 
+    // Open the capture file
+    if ((device_handle_in = pcap_open_offline("example.pcap",	// File name
                                 error_buffer					// Error buffer
        )) == NULL)
     {
@@ -87,22 +87,22 @@ int main()
     /**************************************************************/
 
     /**************************************************************/
-    // Open the output adapter 
+    // Open the output adapter
     if ((device_handle_out = pcap_open_live(device->name, 65536, 1, 1000, error_buffer)) == NULL)
     {
         printf("\n Unable to open adapter %s.\n", device->name);
         return -1;
     }
-    
+
     // Check the link layer. We support only Ethernet for simplicity.
     if (pcap_datalink(device_handle_in) != DLT_EN10MB || pcap_datalink(device_handle_out) != DLT_EN10MB)
     {
         printf("\nThis program works only on Ethernet networks.\n");
         return -1;
     }
-    
+
     /**************************************************************/
-    // Allocate a send queue 
+    // Allocate a send queue
     queue_udp = pcap_sendqueue_alloc(256 * 1024); // 256 kB
     queue_tcp = pcap_sendqueue_alloc(512 * 1024); // 512 kB
 
@@ -111,7 +111,7 @@ int main()
     pcap_loop(device_handle_in, 0, packet_handler, NULL);
 
     /**************************************************************/
-    // Transmit the queue 
+    // Transmit the queue
     // ...parameter �sync� tells if the timestamps must be respected (sync=1 (true) or sync=0 (false))
 
     Sleep(2000);
@@ -127,7 +127,7 @@ int main()
     }
 
     /**************************************************************/
-    // Free queues 
+    // Free queues
      pcap_sendqueue_destroy(queue_udp);
      pcap_sendqueue_destroy(queue_tcp);
     /**************************************************************/
