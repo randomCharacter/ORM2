@@ -220,16 +220,16 @@ pcap_if_t* select_device(pcap_if_t *devices)
 void print_raw_data(unsigned char *data, int data_length)
 {
     int i;
-	printf("\n-------------------------------------------------------------\n\t");
-	for(i = 0; i < data_length; i=i+1)
-	{
-		printf("%.2x ", ((unsigned char*)data)[i]);
+    printf("\n-------------------------------------------------------------\n\t");
+    for(i = 0; i < data_length; i=i+1)
+    {
+        printf("%.2x ", ((unsigned char*)data)[i]);
 
-		// 16 bytes per line
-		if ((i+1) % 16 == 0)
-			printf("\n\t");
-	}
-	printf("\n-------------------------------------------------------------");
+        // 16 bytes per line
+        if ((i+1) % 16 == 0)
+            printf("\n\t");
+    }
+    printf("\n-------------------------------------------------------------");
 }
 
 //Print content of Ethernet header
@@ -273,10 +273,10 @@ void print_udp_header(udp_header *uh)
 
 void print_application_data(unsigned char *data, long data_length)
 {
-	printf("\n=============================================================");
-	printf("\n\tAPPLICATION DATA");
+    printf("\n=============================================================");
+    printf("\n\tAPPLICATION DATA");
 
-	print_raw_data(data, data_length);
+    print_raw_data(data, data_length);
 
-	printf("\n=============================================================");
+    printf("\n=============================================================");
 }
